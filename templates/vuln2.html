@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Vulnerability 2: No XSS Protection</h2>
+    <p>This page does not have XSS protection enabled. Try injecting a script!</p>
+    <form action="" method="post">
+        <label for="xss_input">Enter Text:</label>
+        <input type="text" id="xss_input" name="xss_input">
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vulnerable Flask Website</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Vulnerable Website</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('missing_security_headers') }}">Missing Headers</a></li>
+                <li><a href="{{ url_for('no_xss_protection') }}">No XSS Protection</a></li>
+                <li><a href="{{ url_for('missing_hsts') }}">Missing HSTS</a></li>
+                <li><a href="{{ url_for('open_redirect') }}">Open Redirect</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>Security Vulnerability Testing Site</p>
+    </footer>
+</body>
+</html>
