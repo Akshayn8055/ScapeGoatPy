@@ -8,25 +8,32 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v2
-        
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.8'
-          
-      - name: Install dependencies
+
+      - name: Create and activate virtual environment
         run: |
           python -m venv venv
           source venv/bin/activate
+          pip install --upgrade pip
+
+      - name: Install dependencies
+        run: |
+          source venv/bin/activate
           pip install -r requirements.txt
-          
+
       - name: Run Flask App
         run: |
+          source venv/bin/activate
           nohup python app.py &
-          
+
       - name: Deploy to GitHub Pages
         run: |
           echo "Deployment to GitHub Pages"
