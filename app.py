@@ -30,4 +30,6 @@ def weak_password():
         return jsonify(message="Password is too weak!"), 400
     return jsonify(message="Password is strong!")
 
-
+if __name__ == '__main__':
+    app.run(debug=True)  
+    
