@@ -1,7 +1,5 @@
 name: Deploy Flask App
 
-
-
 on:
   push:
     branches:
@@ -37,6 +35,14 @@ jobs:
           source venv/bin/activate
           nohup python app.py &
 
-      - name: Deploy to GitHub Pages
+      - name: Install ngrok
         run: |
-          echo "Deployment to GitHub Pages"
+          curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null
+          echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list
+          sudo apt update && sudo apt install ngrok
+
+      - name: Start ngrok tunnel
+        run: |
+          nohup ngrok http 5000 > /dev/null 2>&1 &
+          sleep 5
+          curl --silent http://localhost:4040/api/tunnels | jq -r .tunnels[0].public_url
